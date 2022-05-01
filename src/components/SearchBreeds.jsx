@@ -1,23 +1,48 @@
-import React, { Fragment } from "react";
-import Form from 'react-bootstrap/Form';
+import React, { Fragment, useEffect, useState } from "react";
+// import DogDescription from "./DogDescription";
 
 const SearchBreeds = () => {
+  const [dogName, setDogName] = useState([]);
+  // const [eachDogName, setEachDogName] = useState("");
+  const [selected, setSelected] = useState(false);
+
   const fetchDogBreeds = async () => {
     const res = await fetch("https://api.thedogapi.com/v1/breeds");
-    const data = await res.json();
-    console.log(data);
-  }
-  fetchDogBreeds();
+    const dogData = await res.json();
+    setDogName(dogData);
+    console.log(dogData);
+  };
 
+  useEffect(() => {
+    fetchDogBreeds();
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // setEachDogName(e.target.value);
+  };
+  
+  const handleChange = (e) => {
+    setSelected(true);
+  }
 
   return (
     <Fragment>
-      <Form.Select aria-label="Default select example">
-        <option>Open this select menu</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-      </Form.Select>
+      <form onSubmit={handleSubmit}>
+        <select onChange={handleChange}>
+          <option>Open this select menu</option>
+          {dogName.map((option) => (
+            <option key={option.id} >{option.name}</option>
+          ))}
+        </select>
+      </form>
+      <div>
+        <img src="" alt="dog" />
+      </div>
+      {/* <DogDescription dogName={dogName} eachDogName={eachDogName} /> */}
+      {selected ? dogName.map((aaa) => (
+        <img src={aaa.image.url} alt="dog" /> 
+      )): ""}
     </Fragment>
   );
 };
