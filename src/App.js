@@ -1,37 +1,38 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import DogDescription from './components/DogDescription';
+import React, { useEffect, useState } from 'react'
+import Card from './components/Card'
+import getDog from './components/helpers/getDog'
+import Select from './components/Select'
 
-import Header from './components/Header';
-import SearchBreeds from './components/SearchBreeds';
+const initialDog = {
+  image: "https://thehappypuppysite.com/wp-content/uploads/2020/04/Morkie-Temperament-HP-long_.jpg",
+  breed: {
+    id: "1",
+    name: "Morkie",
+  }
+}
+
 
 const App = () => {
-  const [dogName, setDogName] = useState([]);
-  const [eachDogName, setEachDogName] = useState(null);
-
-  const fetchDogBreeds = async () => {
-    const res = await fetch("https://api.thedogapi.com/v1/breeds");
-    const dogData = await res.json();
-    setDogName(dogData);
-    console.log(dogData);
-  };
+  const [dog, setDog] = useState(initialDog);
 
   useEffect(() => {
-    fetchDogBreeds();
+    updateDog();
   }, []);
 
-  const selectHandler = (breed) => {
-    setEachDogName(breed);
+  const updateDog = (breedId) => {
+    getDog(breedId).then((newDog) => {
+      setDog(newDog);
+    });
   }
 
   return (
-    <Fragment>
-      {console.log(eachDogName)}
-      <Header />
-      <SearchBreeds dogName={dogName} selectHandler={selectHandler} eachDogName={eachDogName} />
-      <DogDescription eachDogName={eachDogName} />
-    </Fragment>
+    <div className="app">
+      <Select updateDog={updateDog} />
+      <Card dog={dog} />
+    </div>
   )
 }
 
 export default App
+
 
