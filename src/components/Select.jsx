@@ -14,6 +14,7 @@ const initialBreeds = [
 
 const Select = ({updateDog}) => {
   const [breeds, setBreeds] = useState(initialBreeds);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     updateBreeds();
