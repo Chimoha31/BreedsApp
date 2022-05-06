@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import './LoadingSpinner.css'
+import './LoadingSpinner.scss'
 
 const LoadingSpinner = () => {
   return (

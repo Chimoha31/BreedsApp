@@ -1,6 +1,6 @@
 import React from "react";
 import LoadingSpinner from "./LoadingSpinner";
-import "./Card.css";
+import "./Card.scss";
 
 const Card = ({ dog, updateDog, loading }) => {
   if (loading) {
