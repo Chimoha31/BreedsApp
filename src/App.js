@@ -33,7 +33,6 @@ const App = () => {
   return (
     <div className="app">
       <Select updateDog={updateDog} />
-      
       <Card dog={dog} updateDog={updateDog} loading={loading} />
     </div>
   )
